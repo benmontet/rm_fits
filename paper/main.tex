@@ -1,0 +1,301 @@
+\documentclass[twocolumn]{aastex62}
+
+\bibliographystyle{aasjournal}
+\usepackage{subfigure}
+\usepackage{url}
+\usepackage{hyperref}
+%\usepackage{datetime}
+\usepackage{longtable}
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage[normalem]{ulem}
+\usepackage{bm}
+\usepackage{comment}
+% additions for ease of tabling
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+% colors
+%\usepackage[usenames, dvipsnames]{color}
+
+%\usepackage{pdflscape}
+\usepackage{xcolor, fontawesome}
+\definecolor{twitterblue}{RGB}{64,153,255}
+\newcommand{\twitter}[1]{\href{https://twitter.com/#1 }{\textcolor{twitterblue}{\faTwitter}\,\tt \textcolor{twitterblue}{@#1}}}
+
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{1,0,0}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Comments}{rgb}{0,0.63,1}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{0,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.98,0.98,0.98}
+\definecolor{Booleans}{rgb}{0.572,0,0.572}
+\definecolor{BuiltinFunction}{rgb}{0.572,0,0.572}
+\definecolor{BuiltinConstant}{rgb}{0.572,0,0.572}
+\definecolor{Asterisk}{rgb}{0.670,0,1}
+
+\lstdefinelanguage{Python}{
+    	numbers=left,
+    	numberstyle=\footnotesize,
+    	numbersep=7pt,
+    	xleftmargin=1.26em,
+    	framextopmargin=2em,
+    	framexbottommargin=2em,
+    	showspaces=false,
+    	showtabs=false,
+    	showstringspaces=false,
+    	frame=l,
+    	tabsize=4,
+    	stepnumber=1,
+	% Basic
+	basicstyle=\small\ttfamily,
+    	backgroundcolor=\color{Background},
+%    	breaklines=True,
+%    	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	% Comments
+%	commentstyle=\color{green}\ttfamily,
+	% Strings
+%    	stringstyle=\ttfamily\color{Strings},
+%    	morecomment=[s][\color{Strings}]{'}{'}, 
+%    	stringstyle=\ttfamily\color{Comments},
+%    	morecomment=[s][\color{Comments}]{\#}{\#}, 			
+	% Keywords
+	stringstyle=\ttfamily\color{Strings},
+	morekeywords={import,from,class,def,while,if,in,elif,else,not,or,print,break,continue,return,access,as,except,exec,finally,global,import,lambda,pass,print,raise,try,assert},
+    	keywordstyle={\color{Keywords}\bfseries}, 
+    %	morekeywords={[2]True,False,None},
+    %	keywordstyle={[2]\color{BuiltinConstant}\slshape},
+	otherkeywords={[2]*},
+	keywordstyle={[2]\color{Asterisk}},
+%	emph={self},
+%	emphstyle={\color{self}\slshape}	
+}
+
+\usepackage{color}
+
+\newcommand{\ron}{\color{red}} 
+\newcommand{\bon}{\color{blue}} 
+\newcommand{\gon}{\color{green}} 
+\newcommand{\coff}{\color{black}\,}
+\newcommand{\shrug}{\texttt{\raisebox{0.75em}{\char`\_}\char`\\\char`\_\kern-0.5ex(\kern-0.25ex\raisebox{0.25ex}{\rotatebox{45}{\raisebox{-.75ex}"\kern-1.5ex\rotatebox{-90})}}\kern-0.5ex)\kern-0.5ex\char`\_/\raisebox{0.75em}{\char`\_}}}
+
+
+\newcommand{\rprs}{{$R_p/R_{\star}$}}
+
+\newcommand{\eg}{{\it e.g.}}
+\newcommand{\ie}{{\it i.e.}}
+\newcommand{\kep}{{\it Kepler}}
+\newcommand{\kt}{{\it K2}}
+\newcommand{\tess}{{\it TESS}}
+\newcommand{\ffis}{Full-Frame Images}
+\newcommand{\fulltess}{{\it Transiting Exoplanet Survey Satellite}}
+\newcommand{\Gaia}{{\it Gaia}}
+\newcommand{\spitz}{{\it Spitzer}}
+\newcommand{\vsini}{{$V \sin i$}}
+\newcommand{\teff}{$T_{ eff}$}
+\newcommand{\kms}{{km\,s$^{-1}$}}
+\newcommand{\gcc}{{g\,cm$^{-3}$}}
+\newcommand{\rstar}{{$R_\star$}}
+\newcommand{\rhostar}{{$\rho_\star$}}
+\newcommand{\mearth}{{M$_\oplus$}}
+\newcommand{\rearth}{{R$_\oplus$}}
+\newcommand{\rsun}{{R$_\odot$}}
+\newcommand{\msun}{{M$_\odot$}}
+\newcommand{\mjup}{{M$_\textrm{Jup}$}}
+\newcommand{\rjup}{{R$_\textrm{Jup}$}}
+
+\newcommand{\eleanor}{\texttt{eleanor}}
+
+\newcommand{\mstar}{{$M_\star$}}
+\newcommand{\logg}{{log(g)}}
+\newcommand{\mh}{{[M/H]}~}
+\newcommand{\feh}{{[Fe/H]}~}
+%\newcommand{\h2ok2}{{$ H_2O-K2$}}
+
+\newcommand{\todo}[3]{{\color{#2} \emph{#1} TO DO: #3}}
+\newcommand{\mkntodo}[1]{\todo{ADINA}{cyan}{#1}}
+\newcommand{\btmtodo}[1]{\todo{BEN}{blue}{#1}}
+\newcommand{\anytodo}[1]{\todo{ANYONE}{green}{#1}}
+
+\newcommand{\comm}[1]{{\color{cyan}{#1}}}
+
+\newcommand{\Sph}{{$S_{\textrm{ph}}$}}
+\newcommand{\RHK}{{$R'_{\textrm{HK}}$}}
+
+\newcommand{\unsw}{University of New South Wales}
+\newcommand{\chicago}{Department of Astronomy and Astrophysics, University of
+Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
+
+\newcommand{\grfp}{NSF Graduate Research Fellow}
+
+\newcommand{\flatiron}{Center for Computational Astrophysics, Flatiron Institute, 162 Fifth Ave, New York, NY 10010, USA}
+
+
+%\submitted{for May 2, 2016}
+
+\begin{document}
+\title{DS Tuc b is Aligned}
+
+\shorttitle{DS Tuc R-M} 
+\shortauthors{Montet et al.}
+
+
+\author[0000-0001-7516-8308]{Benjamin~T.~Montet}
+\affiliation{\unsw}
+\affiliation{\chicago}
+
+\author[0000-0002-9464-8101]{Adina~D.~Feinstein}
+\altaffiliation{\grfp}
+\affiliation{\chicago}
+
+\author{Rodrigo}
+
+
+\author{Pablo}
+
+\author{And others TBD incl. PFS Team}
+
+\author{Erin Flowers}
+
+
+\correspondingauthor{Benjamin~T.~Montet; \twitter{benmontet}}
+\email{bmontet@uchicago.edu}
+
+%@arxiver{f8a.pdf,f5.pdf,f2b.pdf}
+%\date{\today, \currenttime}
+
+\begin{abstract}
+
+We'll put an abstract here. comment from Luke: is this the youngest planet with an R-M? it might be?
+\end{abstract}
+
+\keywords{This is where we'll put keywords}
+
+
+\section{Introduction} \label{sec:intro}
+
+Planets around young stars are important and valuable. They teach us about planet formation.
+
+We don't know how big young things get there? Are they scattered in or is the disk torqued by a massive binary companion like Connie suggests might happen?
+
+DS Tuc is a young star, 45 Myr old. It has a binary but too young for Kozai
+
+The planet traces the disk! 
+
+So is it aligned? Let's learn something.
+
+The rest of this paper is organized as follows:
+
+\section{Observations}
+
+PFS folks will probably have words here.
+
+Mention the fast rotation of the star, vsini of like 17 km/s? And the measured rotation period here. Wouldn't hurt to include the eleanor light curve so people can see the rotation and the magnitude of the spots, and it gets us an easy citation.
+
+\section{Data analysis}
+
+Gee, MCMC sure is cool.
+
+
+\section{Results}
+
+It's aligned!
+
+\section{Discussion}
+
+\subsection{Long-term trend}
+
+Can we call something that happens over six hours a long-term trend? Let's find out!
+
+Curve goes up in time. Is this another planet?
+
+Feels unlikely based on the magnitude.
+Would have to be stellar and not this object and the RVs are stable at the few hundred m/s level from other surveys.
+
+Okay so what's going on?
+
+My theory:
+\begin{enumerate}
+    \item More spots on the redder side of the star 
+    \item Explains additional scatter in second half of transit, noticiable in RV data
+    \item Spots are rotating off to high longitude, being increasingly foreshortened.
+    \item The means they're blocking less of the red light from the star
+    \item makes the star overall redder in time
+    \item increases the RV of the star during the transit
+\end{enumerate}
+
+We need an OOM estimate that this can increase the RV by 40 m/s in six hours.
+Also would affect the shape of the lines but we don't have the raw spectra and I'm not suuuuuper excited about trying to dig in. Maybe one of the PFS folks would want to help with that? 
+Maybe Gully would want to help with the general spot math here?
+
+\subsubsection{RM as a powerful technique for young stars}
+
+RVs are hard because the star is so active, but if you can get all the data in one night, it doesn't change that much---or at least in calibratable ways!
+
+
+
+
+\acknowledgements
+
+We thank \btmtodo{people} for \btmtodo{things}.
+
+
+This research was enabled by the Exostar19 program at the Kavli Institute for Theoretical Physics at UC Santa Barbara, which was supported in part by the National Science Foundation under Grant No. NSF PHY-1748958.
+
+This project was developed in part at the \textit{Building Early Science with} TESS meeting, which took place in 2019 March at the University of Chicago.
+
+Work by B.T.M. was performed in part under contract with the Jet
+Propulsion Laboratory (JPL) funded by NASA through
+the Sagan Fellowship Program executed by the NASA
+Exoplanet Science Institute.
+
+This material is based upon work supported by the National Science Foundation Graduate Research Fellowship Program under Grant No. (DGE-1746045). Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.
+
+
+
+This paper includes data collected by the TESS mission. Funding for the TESS mission is provided by the NASA Explorer Program.
+
+TESS data were obtained from the Mikulski Archive for Space Telescopes
+(MAST).
+STScI is operated by the Association of Universities for Research in
+Astronomy, Inc., under NASA contract NAS5-26555.
+Support for MAST is provided by the NASA Office of Space Science via grant
+NNX13AC07G and by other grants and contracts.
+
+
+
+\software{%
+    numpy \citep{numpy},
+    matplotlib \citep{matplotlib},
+    scipy \citep{jones01}
+    tensorflow \citep{tensorflow},
+    lightkurve\footnote{https://doi.org/10.5281/zenodo.2557026},
+    photutils\footnote{https://doi.org/10.5281/zenodo.2533376},
+    astropy\citep{astropy:2013, astropy18},
+    eleanor\citep{Feinstein19},
+    \btmtodo{Fix}
+    }
+
+\facility{TESS, \btmtodo{Magellan}}
+
+
+
+
+
+\bibliography{exopapers}
+
+
+
+
+
+
+\end{document}
+
