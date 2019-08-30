@@ -8,6 +8,8 @@ import emcee
 
 from multiprocessing import Pool
 
+map.reset()
+
 time, vels, verr = np.loadtxt('../data/transit.vels', usecols=[0,1,2], unpack=True)
 time -= 2458706.5
 
@@ -42,7 +44,7 @@ def rmcurve(params):
     vsini, r, b, a, u1, u2, obl, gamma, gammadot, jitter_good, jitter_bad, q = params
     veq = vsini / np.sin(inc * np.pi / 180.0)
 
-    map.reset()
+
     map.inc = inc
     map.obl = obl
     # map.add_spot(spot_amp, sigma=spot_sig, lon=spot_lon, lat=-spot_lat)
