@@ -8,40 +8,40 @@ import emcee
 
 from multiprocessing import Pool
 
-map.reset()
 
 time, vels, verr = np.loadtxt('../data/transit.vels', usecols=[0,1,2], unpack=True)
 time -= 2458706.5
 
-map = starry.Map(ydeg=20, udeg=2, rv=True, lazy=False)
+map = starry.Map(ydeg=4, udeg=2, rv=True, lazy=False)
+map.reset()
+
 
 Prot = 2.85             # days
 P = 8.1387              # days
-t0 = 0.165
 e = 0.0
 w = 0.0
-inc = 82.0
+inc = 90.0
 
 tuse = time + 0.0
 euse = verr + 0.0
 vuse = vels + 0.0
 
 bnds = ((12000, 24000), (0.04, 0.07), (-1.0, 0.0), (15,25), (0,1),(0,1), (0,90), (-20,20),
-        (50,300), (0.0, 2.0), (2.0, 20.0), (0.0, 1.0))
+        (50,300), (0.0, 2.0), (2.0, 20.0), (0.0, 1.0), (0.12, 0.20))
 
 
 vsini_mu = 18.3
 vsini_sig = 1.8
 
-ndim = 12
+ndim = 13
 nwalkers = 30
 
 init = np.array([18300.012920585246, 0.058325908653385085, -0.17989438892573809, 20.56513997921657, 1.0, 0.0, 17.311534969903935,
-        -6.657428484257285, 185.09863367853995, 1.2029170041130754, 5.885716645051851, 0.01])
+        -6.657428484257285, 185.09863367853995, 1.2029170041130754, 5.885716645051851, 0.01, 0.165])
 
 
 def rmcurve(params):
-    vsini, r, b, a, u1, u2, obl, gamma, gammadot, jitter_good, jitter_bad, q = params
+    vsini, r, b, a, u1, u2, obl, gamma, gammadot, jitter_good, jitter_bad, q, t0 = params
     veq = vsini / np.sin(inc * np.pi / 180.0)
 
 
@@ -51,14 +51,19 @@ def rmcurve(params):
     map[1:] = [u1, u2]
     map.veq = veq
 
-    orbit = exo.orbits.KeplerianOrbit(period=P, a=a, t0=t0, b=b, ecc=e, omega=w, r_star=1.0)
+    #orbit = exo.orbits.KeplerianOrbit(period=P, a=a, t0=t0, b=b, ecc=e, omega=w, r_star=1.0)
 
-    x, y, z = orbit.get_relative_position(tuse)
+    #x, y, z = orbit.get_relative_position(tuse)
 
-    xo = x.eval()
-    yo = y.eval()
-    zo = z.eval()
-    theta = 360.0 / Prot * tuse
+    #xo = x.eval()
+    #yo = y.eval()
+    #33zo = z.eval()
+    #theta = 360.0 / Prot * tuse
+
+    xo = np.ones_like(tuse)
+    yo = np.ones_like(tuse)
+    zo = np.ones_like(tuse)*10.0
+    theta = np.ones_like(tuse)
 
     rv = map.rv(xo=xo, yo=yo, zo=zo, ro=r, theta=theta)
     rv += gamma + gammadot * (tuse - 0.15)
@@ -73,7 +78,7 @@ def rmcurve(params):
     return lnprob
 
 def set_priors(params):
-    vsini, r, b, a, u1, u2, obl, gamma, gammadot, jitter_good, jitter_bad, q = params
+    vsini, r, b, a, u1, u2, obl, gamma, gammadot, jitter_good, jitter_bad, q, t0 = params
     lnprior = 0
 
     if not all(b[0] < v < b[1] for v, b in zip(params, bnds)):
@@ -100,6 +105,7 @@ def setup_data(params):
     varystd = np.ones(ndim)*0.2
     varystd[0] = 100.0
     varystd[1] = 0.01
+    varystd[12] = 0.01
     varystd[7] = 3.0
     varystd[8] = 3.0
     varystd[11] = 0.001
@@ -112,10 +118,10 @@ def setup_data(params):
 p0 = setup_data(init)
 
 sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob)
-pos, prob, state = sampler.run_mcmc(p0, 20, progress=True)
+pos, prob, state = sampler.run_mcmc(p0, 2000, progress=True)
 
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
-print(best)
+print(sampler.flatlnprobability[best])
 
 
 
