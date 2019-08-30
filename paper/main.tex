@@ -158,6 +158,7 @@ Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
 
 \author{Rodrigo}
 
+\author{Began Medell}
 
 \author{Pablo}
 
@@ -200,7 +201,11 @@ PFS folks will probably have words here.
 
 Mention the fast rotation of the star, vsini of like 17 km/s? And the measured rotation period here. Wouldn't hurt to include the eleanor light curve so people can see the rotation and the magnitude of the spots, and it gets us an easy citation.
 
+
+
 \section{Data analysis}
+
+We model the inferred radial velocities with version 1.0.0.dev3 of the \textit{starry} package of \citet{Luger19}. 
 
 Gee, MCMC sure is cool.
 
@@ -275,16 +280,15 @@ NNX13AC07G and by other grants and contracts.
 \software{%
     numpy \citep{numpy},
     matplotlib \citep{matplotlib},
-    scipy \citep{jones01}
-    tensorflow \citep{tensorflow},
-    lightkurve\footnote{https://doi.org/10.5281/zenodo.2557026},
-    photutils\footnote{https://doi.org/10.5281/zenodo.2533376},
-    astropy\citep{astropy:2013, astropy18},
-    eleanor\citep{Feinstein19},
-    \btmtodo{Fix}
+    scipy \citep{Jones01}
+    astropy \citep{Astropy18},
+    eleanor \citep{Feinstein19},
+    starry \citep{Luger19},
+    exoplanet \citep{Foreman-Mackey19},
+    theano
     }
 
-\facility{TESS, \btmtodo{Magellan}}
+\facility{TESS, Magellan:Clay (Planet Finder Spectrograph)}
 
 
 
