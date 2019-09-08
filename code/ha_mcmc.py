@@ -58,7 +58,7 @@ def rmcurve(params):
     map.veq = veq
 
 
-    f = (tarr - t0)/P*2*np.pi
+    f = (tuse - t0)/P*2*np.pi
     I = np.arccos(b/a)
 
     zo = a*np.cos(f) 
@@ -66,7 +66,7 @@ def rmcurve(params):
     xo = a*np.sin(f)*np.sin(I)
 
 
-    theta = 360.0 / Prot * tarr
+    theta = 360.0 / Prot * tuse
 
     rv_0 = map.rv(xo=xo, yo=yo, zo=zo, ro=r, theta=theta)
     
@@ -138,7 +138,7 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('run/chain_ha', sampler.chain)
+np.save('../runs/chain_ha', sampler.chain)
 np.save('pos', pos)
 np.save('prob', prob)
 
