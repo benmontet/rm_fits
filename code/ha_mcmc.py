@@ -33,6 +33,9 @@ bnds = ((12000, 24000), (0.04, 0.09), (-1.0, 0.0), (15,25), (0,1),(0,1), (-30,90
 vsini_mu = 18300
 vsini_sig = 1800
 
+rp_mu = 0.057
+rp_sig = 0.003
+
 ndim = 13
 nwalkers = 500
 
@@ -92,6 +95,8 @@ def set_priors(params):
 
     lnprior -= 0.5*(vsini - vsini_mu)**2/vsini_sig**2
 
+    lnprior -= 0.5*(r-rp_mu)**2/rp_sig**2
+
     return lnprior
 
 
@@ -138,7 +143,7 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('../runs/chain_ha_mm', sampler.chain)
+np.save('../runs/chain_ha_mm_rp_no_vsini', sampler.chain)
 np.save('pos', pos)
 np.save('prob', prob)
 

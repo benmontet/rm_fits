@@ -33,6 +33,9 @@ bnds = ((12000, 24000), (0.04, 0.09), (-1.0, 0.0), (15,25), (0,1),(0,1), (-70,90
 vsini_mu = 18300
 vsini_sig = 1800
 
+rp_mu = 0.057
+rp_sig = 0.003
+
 ndim = 17
 nwalkers = 500
 
@@ -62,6 +65,9 @@ def rmcurve(params):
 
     theta = 360.0 / Prot * tuse
 
+    gamma3 = 0.0
+    gamma4 = 0.0
+
     rv_0 = map.rv(xo=xo, yo=yo, zo=zo, ro=r, theta=theta)
     trend = gamma + gammadot * (tuse - 0.15) + gammadotdot * (tuse - 0.15) ** 2 + gamma3*(tuse-0.15)**3 + gamma4*(tuse-0.15)**4
     rv = rv_0 + trend
@@ -70,7 +76,8 @@ def rmcurve(params):
     var_bad = (euse ** 2 + jitter_bad ** 2)
 
     goodgauss = q / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
-    badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv_0 * factor + trend - vuse) ** 2 / (2 * var_bad))
+    #badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv_0 * factor + trend - vuse) ** 2 / (2 * var_bad))
+    badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
 
     lnprob = np.log(goodgauss + badgauss)
 
@@ -88,6 +95,9 @@ def set_priors(params):
         return -np.inf
 
     lnprior -= 0.5*(vsini - vsini_mu)**2/vsini_sig**2
+
+    lnprior -= 0.5*(r-rp_mu)**2/rp_sig**2
+
 
     return lnprior
 
@@ -137,7 +147,7 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('chain', sampler.chain)
+np.save('../runs/chain_2_2_std_mm', sampler.chain)
 np.save('pos', pos)
 np.save('prob', prob)
 
