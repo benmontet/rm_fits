@@ -9,8 +9,16 @@ import emcee
 from multiprocessing import Pool
 
 
-time, vels, verr = np.loadtxt('../data/transit.vels', usecols=[0,1,2], unpack=True)
-time -= 2458706.5
+#time, vels, verr = np.loadtxt('../data/transit.vels', usecols=[0,1,2], unpack=True)
+#time -= 2458706.5
+
+time, vels, verr = np.loadtxt('../data/vst222259.ascii', usecols=[1,2,3], unpack=True)
+
+time = time[:-4]
+vels = vels[:-4]
+verr = verr[:-4]
+
+time -= 18706.5
 
 map = starry.Map(ydeg=4, udeg=2, rv=True, lazy=False)
 map.reset()
@@ -65,7 +73,7 @@ def rmcurve(params):
 
     theta = 360.0 / Prot * tuse
 
-    gamma3 = 0.0
+    #gamma3 = 0.0
     gamma4 = 0.0
 
     rv_0 = map.rv(xo=xo, yo=yo, zo=zo, ro=r, theta=theta)
@@ -147,7 +155,7 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('../runs/chain_2_2_std_mm', sampler.chain)
+np.save('../runs/chain_3_2_std_mm', sampler.chain)
 np.save('pos', pos)
 np.save('prob', prob)
 
