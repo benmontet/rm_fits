@@ -10,12 +10,10 @@ from multiprocessing import Pool
 
 
 time, vels, verr = np.loadtxt('../data/vst222259.ascii', usecols=[1,2,3], unpack=True)
-ha = np.loadtxt('../data/222259_mbcvel.ascii', usecols=[-2])
 
 time = time[:-4]
 vels = vels[:-4]
 verr = verr[:-4]
-ha   = ha[:-7]
 
 time -= 18706.5
 
@@ -33,7 +31,8 @@ tuse = time + 0.0
 euse = verr + 0.0
 vuse = vels + 0.0
 
-bnds = ((12000, 24000), (0.04, 0.09), (-1.0, 0.0), (15,25), (0,1),(0,1), (-30,90), (-500,500), (0.0, 3.0), (0, 40.0), (0.0, 1.0), (0.16, 0.175), (-100000, 0), (-1000, 0.539), (0.0, 10.0))
+bnds = ((12000, 24000), (0.04, 0.09), (-1.0, 0.0), (15,25), (0,1),(0,1), (-30,90), (-500,500), (0.0, 3.0), (0, 40.0), (0.0, 1.0),
+        (0.16, 0.175), (-0.20, 0.00), (0.01, 0.10), (-90.0, 90.0), (-90.0, 0.0))
 
 
 
@@ -43,16 +42,16 @@ vsini_sig = 1800
 rp_mu = 0.057
 rp_sig = 0.003
 
-ndim = 15
+ndim = 16
 nwalkers = 500
 
-init = np.array([19300, 0.0688, -0.09, 20.79, 0.5, 0.40, 0.0, 100.0, 1.0, 5.0, 0.7, 0.166, -3500, 0.51, 1.0])
+init = np.array([19300, 0.0688, -0.09, 20.79, 0.5, 0.40, 0.0, 100.0, 1.0, 5.0, 0.7, 0.166, -0.02, 0.04, 23, -30])
 
 
 
 def rmcurve(params):
 
-    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, ha_fac, ha_gam, ha_exp = params
+    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, spot_amp, spot_sig, spot_lon, spot_lat = params
     veq = vsini / np.sin(inc * np.pi / 180.0)
     
     map.reset()
@@ -63,6 +62,7 @@ def rmcurve(params):
     map[1:] = [u1, u2]
     map.veq = veq
 
+    #map.add_spot(spot_amp, sigma=spot_sig, lon=spot_lon, lat=spot_lat)
 
     f = (tuse - t0)/P*2*np.pi
     I = np.arccos(b/a)
@@ -74,10 +74,11 @@ def rmcurve(params):
 
     theta = 360.0 / Prot * tuse
 
+    rv_nospot = map.rv(xo=xo, yo=yo, zo=zo, ro=r, theta=theta)
+    map.add_spot(spot_amp, sigma=spot_sig, lon=spot_lon, lat=spot_lat)
     rv_0 = map.rv(xo=xo, yo=yo, zo=zo, ro=r, theta=theta)
-    
-    trend = ha_fac * (ha-ha_gam)**ha_exp + gamma
-    rv = rv_0 + trend
+
+    rv = rv_0 + gamma
 
     #print(rv)
     
@@ -85,15 +86,15 @@ def rmcurve(params):
     var_bad  = (euse**2 + jitter_bad**2)
    
     goodgauss = q / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
-    badgauss = (1-q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
-    #badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv_0 * 0.75 + trend - vuse) ** 2 / (2 * var_bad))
+    #badgauss = (1-q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
+    badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - 0.25*rv_nospot - vuse) ** 2 / (2 * var_bad))
     lnprob = np.log(goodgauss + badgauss)
 
     #print(-1 * lnprob)
     return np.sum(lnprob)
 
 def set_priors(params):
-    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, ha_fac, ha_gam, ha_exp = params
+    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, spot_amp, spot_sig, spot_lon, spot_lat = params
     lnprior = 0
 
     if not all(b[0] < v < b[1] for v, b in zip(params, bnds)):
@@ -135,9 +136,8 @@ def setup_data(params):
     varystd[9] = 0.6
     varystd[10] = 0.01
     varystd[11] = 0.001
-    varystd[12] = 200.0
-    varystd[13] = 0.001
-    varystd[14] = 0.025
+    varystd[12] = 0.005
+    varystd[13] = 0.005
 
 
     for i in range(len(varystd)):
@@ -155,7 +155,7 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('../runs/chain_sk_mm_rpprior', sampler.chain)
+np.save('../runs/chain_spotmodel_1_bmlnlike', sampler.chain)
 
 np.save('pos', pos)
 np.save('prob', prob)
