@@ -32,7 +32,7 @@ euse = verr + 0.0
 vuse = vels + 0.0
 
 bnds = ((12000, 24000), (0.04, 0.09), (-1.0, 0.0), (15,25), (0,1),(0,1), (-30,90), (-500,500), (0.0, 3.0), (0, 40.0), (0.0, 1.0),
-        (0.16, 0.175), (-0.20, 0.00), (0.01, 0.10), (-90.0, 90.0), (-90.0, 0.0))
+        (0.16, 0.175), (-0.20, 0.00), (0.01, 0.10), (-90.0, 90.0), (-90.0, 0.0), (0.0, 1.0))
 
 
 
@@ -42,16 +42,16 @@ vsini_sig = 1800
 rp_mu = 0.057
 rp_sig = 0.003
 
-ndim = 16
+ndim = 17
 nwalkers = 500
 
-init = np.array([19300, 0.0688, -0.09, 20.79, 0.5, 0.40, 0.0, 100.0, 1.0, 5.0, 0.7, 0.166, -0.02, 0.04, 23, -30])
+init = np.array([19300, 0.0688, -0.09, 20.79, 0.5, 0.40, 0.0, 100.0, 1.0, 5.0, 0.7, 0.166, -0.02, 0.04, 23, -30, 0.25])
 
 
 
 def rmcurve(params):
 
-    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, spot_amp, spot_sig, spot_lon, spot_lat = params
+    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, spot_amp, spot_sig, spot_lon, spot_lat, factor = params
     veq = vsini / np.sin(inc * np.pi / 180.0)
     
     map.reset()
@@ -87,14 +87,14 @@ def rmcurve(params):
    
     goodgauss = q / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
     #badgauss = (1-q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
-    badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - 0.25*rv_nospot - vuse) ** 2 / (2 * var_bad))
+    badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - factor*rv_nospot - vuse) ** 2 / (2 * var_bad))
     lnprob = np.log(goodgauss + badgauss)
 
     #print(-1 * lnprob)
     return np.sum(lnprob)
 
 def set_priors(params):
-    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, spot_amp, spot_sig, spot_lon, spot_lat = params
+    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, spot_amp, spot_sig, spot_lon, spot_lat, factor = params
     lnprior = 0
 
     if not all(b[0] < v < b[1] for v, b in zip(params, bnds)):
@@ -138,6 +138,7 @@ def setup_data(params):
     varystd[11] = 0.001
     varystd[12] = 0.005
     varystd[13] = 0.005
+    varystd[16] = 0.01
 
 
     for i in range(len(varystd)):
@@ -155,7 +156,7 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('../runs/chain_spotmodel_1_bmlnlike', sampler.chain)
+np.save('../runs/chain_spotmodel_1_bmlnlike_factor', sampler.chain)
 
 np.save('pos', pos)
 np.save('prob', prob)
