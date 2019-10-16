@@ -181,11 +181,31 @@ We'll put an abstract here. comment from Luke: is this the youngest planet with 
 \keywords{This is where we'll put keywords}
 
 
+ 
 \section{Introduction} \label{sec:intro}
 
-Planets around young stars are important and valuable. They teach us about planet formation.
+Planet formation is poorly understood \citep[e.g.][]{Morbidelli16}. 
+Each discovered planetary system represents an outcome of the planet formation process, and therefore provides an opportunity to learn about how different planets form in different environments. 
+However, each observed present-day system is not a pure laboratory: over billions of years, planet-planet and planet-star gravitational interactions can scatter, torque, migrate, or otherwise perturb orbits, distancing planetary systems from their formation state \citep{Kozai62, Lidov62, Fabrycky07, Chatterjee08}. 
+This picture is complicated by the fact that in many cases, stellar ages are very poorly known \citep[e.g.][]{Barnes07, Soderblom10}.
 
-We don't know how big young things get there? Are they scattered in or is the disk torqued by a massive binary companion like Connie suggests might happen?
+The origins of hot Jupiters are still unclear \citep{Dawson18}.
+Kozai-Lidov cycles and tidal friction are often invoked to explain the formation of hot Jupiters \citep{Fabrycky07}, but smooth disk migration provides a reasonable alternative in many cases \citep{Ida08}. 
+It is possible that multiple channels are required in order to explain all of the observed systems: \citet{Nelson17} analyze data from the HAT and WASP exoplanet surveys and find the data can be well-fit by a model in which $\sim85\%$ of hot Jupiters are formed through high-eccentricity migration and $\sim15\%$ through disk migration.
+
+Planets in young clusters are valuable resources to provide clean test cases for planet formation. 
+Dynamical interactions like the Kozai-Lidov effect can, depending on the system architecture, occur over hundreds of millions or billions of years \citep{Montet15c, Naoz16}. 
+For systems with younger ages, we can rule out certain dynamical interactions, meaning it is likely that the orbit of the planet traces the orbit of the now-dissipated disk. 
+
+Therefore, by measuring the obliquity of the orbits of young planets relative to the spin of their host stars, we are tracing the obliquity of their disks. 
+Observing a population of these systems will allow us to understand statistical disk properties. 
+Alignment of planetary systems and their host stars is often taken as evidence in favor of smooth migration processes. \btmtodo{cite papers here}. 
+However, \btmtodo{Batygin citation} suggest wide binary companions or nearby stars in the birth cluster can torque disks to random inclinations over the lifetime of the disk. With a statistical sample of the obliquities of young planets, we can test this hypothesis.
+
+Such a survey is limited by the small number of planetary systems around young stars. There are only a handful of planets known to be younger than 100 Myr, identified by their membership in young moving groups or star forming regions \btmtodo{citep David19, Mann, others}.
+
+Recently, data from the Transiting Exoplanet Survey Satellite \citep{Ricker14} were used to identify a planet around the star DS Tuc A \citep{Bennatti19, Newton19}. 
+DS Tuc is a member of the Tucana-Horologium (Tuc-Hor) assocation
 
 DS Tuc is a young star, 45 Myr old. It has a binary but too young for Kozai
 
@@ -206,6 +226,12 @@ Mention the fast rotation of the star, vsini of like 17 km/s? And the measured r
 \section{Data analysis}
 
 We model the inferred radial velocities with version 1.0.0.dev3 of the \textit{starry} package of \citet{Luger19}. 
+
+\subsection{Likelihood Function}
+
+
+
+Something in the models subsubsection about Halpha being less noisy than Shk for this star. Probably because of the wavelengths we're dealing with?
 
 Gee, MCMC sure is cool.
 
@@ -241,24 +267,33 @@ We need an OOM estimate that this can increase the RV by 40 m/s in six hours.
 Also would affect the shape of the lines but we don't have the raw spectra and I'm not suuuuuper excited about trying to dig in. Maybe one of the PFS folks would want to help with that? 
 Maybe Gully would want to help with the general spot math here?
 
+\subsection{Asas-sn data to characterize spots}
+
 \subsection{RM as a powerful technique for young stars}
 
 RVs are hard because the star is so active, but if you can get all the data in one night, it doesn't change that much---or at least in calibratable ways!
 
 
+But cite Barragan, Aigrain here as the power of RVs in mitigating stellar activity.
+
 \subsubsection{What about oblateness and differential rotation?}
 
 Oblateness - how oblate is the star anyway?
-Not important for these systems, just infer a different orbital velocity or radius, depending on how its fit. The only place to learn a difference is in ingress/egress, which needs to be resolved at a high timescale. Need a precise stellar radius and eccentricity, at which point it might be useful! But this is hard for these s
+Not important for these systems, just infer a different orbital velocity or radius, depending on how its fit. The only place to learn a difference is in ingress/egress, which needs to be resolved at a high timescale. Need a precise stellar radius and eccentricity, at which point it might be useful! But this is hard for these systems because orbits are hard for these young systems.
+
+cite \citet{Giminez06} in this section probably.
 
 
-Differential rotation not mentionable unless system hystems already.ighly misaligned. Even then the signal is smaller than the scatter due to starspots so many observations will be required to disentangle.
+Differential rotation not measureable unless system highly misaligned. Even then the signal is smaller than the scatter due to starspots (1 m/s for a system like this one) so many observations at high SNR will be required to disentangle. This is going to be tough!
+
+Could we say something about differential rotation from multiple planets? This seems at odds with the previous graph. Maybe in idealized cases? Need to work through this consideration!
 
 
+Somewhere: \citet{Oshagh18} on limitations of R-M for very active stars.
 
 \acknowledgements
 
-We thank \btmtodo{people} for \btmtodo{things}.
+We thank \btmtodo{people including Michael Gully-Santiago and Leslie Rogers} for \btmtodo{things}.
 
 
 This research was enabled by the Exostar19 program at the Kavli Institute for Theoretical Physics at UC Santa Barbara, which was supported in part by the National Science Foundation under Grant No. NSF PHY-1748958.
@@ -292,10 +327,10 @@ NNX13AC07G and by other grants and contracts.
     astropy \citep{Astropy18},
     eleanor \citep{Feinstein19},
     starry \citep{Luger19},
-    theano
+    emcee \citep{Foreman-Mackey12}
     }
 
-\facility{TESS, Magellan:Clay (Planet Finder Spectrograph)}
+\facility{Magellan:Clay (Planet Finder Spectrograph), TESS}
 
 
 
