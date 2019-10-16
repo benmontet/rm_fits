@@ -130,7 +130,7 @@
 \newcommand{\Sph}{{$S_{\textrm{ph}}$}}
 \newcommand{\RHK}{{$R'_{\textrm{HK}}$}}
 
-\newcommand{\unsw}{University of New South Wales}
+\newcommand{\unsw}{School of Physics, University of New South Wales, Sydney, NSW 2052, Australia}
 \newcommand{\chicago}{Department of Astronomy and Astrophysics, University of
 Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
 
@@ -142,9 +142,9 @@ Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
 %\submitted{for May 2, 2016}
 
 \begin{document}
-\title{DS Tuc b is Aligned?}
+\title{The Young Planet DS Tuc Ab has a Low Obliquity}
 
-\shorttitle{DS Tuc R-M} 
+\shorttitle{DS Tuc Ab has a Low Obliquity} 
 \shortauthors{Montet et al.}
 
 
@@ -156,9 +156,11 @@ Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
 \altaffiliation{\grfp}
 \affiliation{\chicago}
 
-\author{Rodrigo}
+\author{Rodrigo Luger}
+\affiliation{\flatiron}
 
-\author{Began Medell}
+\author{Megan E. Bedell}
+\affiliation{\flatiron}
 
 \author{Pablo}
 
@@ -175,7 +177,7 @@ Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
 
 \begin{abstract}
 
-We'll put an abstract here. comment from Luke: is this the youngest planet with an R-M? it might be?
+We'll put an abstract here. comment from Luke: is this the youngest planet with an R-M? it might be? Mention that we confirm it, only previously validated.
 \end{abstract}
 
 \keywords{This is where we'll put keywords}
@@ -204,32 +206,131 @@ However, \btmtodo{Batygin citation} suggest wide binary companions or nearby sta
 
 Such a survey is limited by the small number of planetary systems around young stars. There are only a handful of planets known to be younger than 100 Myr, identified by their membership in young moving groups or star forming regions \btmtodo{citep David19, Mann, others}.
 
-Recently, data from the Transiting Exoplanet Survey Satellite \citep{Ricker14} were used to identify a planet around the star DS Tuc A \citep{Bennatti19, Newton19}. 
-DS Tuc is a member of the Tucana-Horologium (Tuc-Hor) assocation
+Recently, data from the Transiting Exoplanet Survey Satellite \citep{Ricker14} were used to identify a planet with an orbital period of 8.14 days around the star DS Tuc A \citep{Benatti19, Newton19}. 
+DS Tuc is a member of the Tucana-Horologium (Tuc-Hor) assocation, which has an age of approximately 45 Myr \btmtodo{cite!}. 
+DS Tuc itself is a binary with a projected separation of \btmtodo{AU}. 
+From \citet{Holman97}, the timescale for Kozai-Lidov interactions is
+\begin{equation}
+    \tau \approx P_\textrm{planet} \frac{M_\star}{M_\textrm{pert}} \bigg(\frac{a_\textrm{pert}}{a_\textrm{planet}}\bigg)^3 (1-e^2_\textrm{pert})^{3/2},
+\label{eq:timescale}
+\end{equation}
+where $P_\textrm{planet}$ is the the orbital period of a planet with orbital semimajor axis  $a_\textrm{planet}$ about a host of mass $M_\star$, $M_\textrm{pert}$ is the
+mass of the perturbing star, and $a_\textrm{pert}$ and $e_\textrm{pert}$ the semimajor axis and eccentricity of the outer object's orbit around the host star/planet system.
 
-DS Tuc is a young star, 45 Myr old. It has a binary but too young for Kozai
+From the orbital parameters in \citet{Newton19}, ${M_\star}/{M_\textrm{pert}} \approx 1.2$, ${a_\textrm{pert}}/{a_\textrm{planet}} \approx 2000$, and $(1-e^2_\textrm{pert})^{3/2} \approx 0.5$, so the timescale $\tau$ from Equation \ref{eq:timescale} is more than 100 Myr. 
 
-The planet traces the disk! 
+Therefore, this planet likely traces the orientation of the now-dissipated protoplanetary disk. 
+Measuring the obliquity of the planet relative to the star thus enables us to test theories of disk torqing.
+We can measure the obliquity between the spin of the star and the orbit of the planet through the Rossiter-McLaughlin effect, in which an apparent redshift and blueshift in the radial velocity of the star are observed as a transiting planet occults the blueshifted and redshifted hemispheres of the rotating star, respectively \citep{Rossiter24, McLaughlin24}.
+DS Tuc Ab is the youngest known planet for which such an observation has been attempted, providing us the nearest test case to an undissipated disk yet acheivable.
 
-So is it aligned? Let's learn something.
 
 The rest of this paper is organized as follows:
+In Section \ref{sec:obs} we describe the observations.
+In Section \ref{sec:analysis} we describe our data analysis.
+In Section \ref{sec:results} we present our results.
+In Section \ref{sec:discussion}, we discuss best practices for future similar observations of young stars and potential confounding factors, as well as future work.
+
 
 \section{Observations}
+\label{sec:obs}
 
-PFS folks will probably have words here.
+We obtained data with the Planet Finder Spectrograph (PFS) on the Magellan Clay Telescope \citep{Crane06, Crane08, Crane10}. 
+On \btmtodo{date} from \btmtodo{time} to \btmtodo{time} we obtained \btmtodo{number} of measurements of the RV of DS Tuc A. The transit duration is 190 minutes, meaning approximately 50\% of the data were obtained in transit while the other half provide information about the out-of-transit RV baseline. Each exposure was 360 seconds in length and was taken with the \btmtodo{slit} slit, which provides a resolution $R \approx$ \btmtodo{number} per btmtodo{pixel or resolution element?}. All observations were taken with the iodine cell in place \citep{Marcy92}, which imprints a series of narrow lines at known wavelengths to measure the instrument point spread function and wavelength solution at each epoch.
 
-Mention the fast rotation of the star, vsini of like 17 km/s? And the measured rotation period here. Wouldn't hurt to include the eleanor light curve so people can see the rotation and the magnitude of the spots, and it gets us an easy citation.
+\todo{pfs team}{red}{Is there anything else you would like us to include?}
+
+To characterize the stellar activity-induced variations, we also obtained \btmtodo{more}
+These observations had exposure lengths varying from 360 to 600 seconds under variable sky conditions, with the goal of achieving a similar SNR in each of these spectra as during the night of the transit.
+
+We also collected a template spectrum of DS Tuc A immediately after the transit observations. 
+This spectrum, obtained under similar conditions and with the same slit but without the iodine cell in the light path, is used in the pipeline RV modeling.
+All observations were then analyzed using the standard PFS pipeline \citep{Butler96}, which divides the spectrum into 2\AA\ chunks and fits each chunk independently.
+The resultant RV is the weighted mean of the RVs of each chunk, and the provided uncertainty is the standard deviation of these velocities.
+
+\btmtodo{Paragraph here about what RVs are included in the modeling}
+
+The resultant RVs are given in Table \ref{tab:data} and displayed in Figure \ref{fig:data}.
+
+
+\input{datatable.tex}
+
+\begin{figure}[!tbh]
+  \begin{center}
+    \includegraphics[width=0.5\textwidth, trim={0cm 0.0cm 0cm 0cm}, clip=true]{../figures/all_data.pdf}
+   \end{center}
+  \caption{\btmtodo{figure caption needed}}
+  \label{fig:data}
+\end{figure}
 
 
 
 \section{Data analysis}
+\label{sec:analysis}
 
 We model the inferred radial velocities with version 1.0.0.dev3 of the \textit{starry} package of \citet{Luger19}. 
+\textit{starry} models the star as a series of spherical harmonics. 
+\todo{RODRIGO}{red}{please put a couple sentences about starry here, especially in how it does the R-M signal behind the scenes.}
+
+\btmtodo{Mention that we force circular orbits}
+
+\subsection{Model}
+
+Over the six hours of the transit, the apparent radial velocity of the star increases by \btmtodo{number} m s$^{-1}$. 
+In Section \ref{sec:trend} we argue this trend is due to stellar activity rather than an additional planet.
+To understand the obliquity of the transiting planet, for now we are only concerned with appropriately modeling this signal.
+We attempt to model this signal through multiple approaches.
+We use low-order polynomials, up to the third degree, to fit the extra variability during the night of the transit. 
+We also build a stellar activity model by fitting a function that is a linear sum of the observed $H\alpha$ and calcium $S_{HK}$ measurements during the night, which are correlated with the observed RV.
+Finally, we also fit \textit{starry} models of a single starspot in time. The spot is modeled as a Gaussian darker region on the surface of the star; we allow the spot's size, contrast, and location to vary as we fit both signals.
+
+In each case, we then build a model that is the sum of the R-M signal and the stellar activity signal at each cadence, such that
+With three separate models, we can use the inferred likelihood to compare the abilities of these activity models to fit the data. 
+It also gives us the opportunity to verify that the resultant obliquity measurement does not depend on the specific prescription of the stellar activity signal.
+
+\btmtodo{this whole section uses the term `model' too much}
+
+
 
 \subsection{Likelihood Function}
 
+To compare the data to our model, we need to write down a likelihood function. 
+Each observation has an associated uncertainty, calculated as the \todo{pfs team}{red}{how exactly are the uncertainties calculated in the PFS pipeline?}
+For this young and active star, this likelihood may not represent the true uncertainty in the measured RV at each epoch. 
+For example, occultations of small spots across the surface of the star could cause the observed RV to vary from epoch to epoch. 
+Additionally, stellar flares would have characteristic timescales similar to a single exposure and could impact the observed RV if a significant amount of emission from the star was ejected from the surface of the star with considerable velocity \btmtodo{cite here}.
 
+We test multiple likelihood functions with the same form.
+First, we assume a model that is the sum of two Gaussians with the same mean but different variance. 
+Under this model, each data point has some probability $q$ of being a ``good'' data point drawn from a relatively narrow distribution. This distribution is a combination of the PFS pipeline uncertainty and an additional jitter term, added in quadrature. 
+Each data point also has a probability $1-q$ of being drawn from a much broader distribution. We allow the width of both Gaussian distributions to vary in our fitting procedure. 
+Additionally, $q$ is a free parameter: if the data were well-modeled by a single Gaussian, we would find the posterior distribution on $q$ to be consistent with zero.
+
+These two Gaussians do not need to have the same mean. 
+The surface of the star, as a rapidly rotating G dwarf, is likely dominated by dark starspots rather than bright faculae \citep{Montet17}. 
+Each dark spot will have the effect of inducing a signal with roughly the same shape as the R-M effect for an aligned system: as the spot occults the blueshifted hemisphere of the star, it will induce an apparent redshift and vice versa.
+As a planet occults a spot then, just as this phenomenon produces a brief brightening in a transit light curve \btmtodo{cite spot crossing papers here} a spot-crossing event would cause a temporary decrease in the magnitude of the Rossiter-McLaughlin signal. 
+We then allow for the broader Gaussian in our mixture model to be offset by some factor which is directly proportional to the magnitude of the R-M signal at that epoch. The mean of our second Gaussian is then
+\begin{equation}
+\mu_2 = \alpha (RV_{RM}).
+\end{equation}
+When $\alpha = 1$, the means of the two Gaussians overlap precisely, leaving us with a standard mixture model as might be expected if the extra variability was not related to starspots. 
+We test both the case where $\alpha$ is set equal to 1, and also allowed to vary as a free parameter.
+
+Our full likelihood function is then
+\begin{equation}
+\mathcal{L} \propto 1	
+\end{equation}
+\btmtodo{write this out}
+where \btmtodo{stuff equals stuff}
+
+\subsection{Fitting}
+
+
+
+
+
+Don't forget to mention our priors here!
 
 Something in the models subsubsection about Halpha being less noisy than Shk for this star. Probably because of the wavelengths we're dealing with?
 
@@ -237,49 +338,157 @@ Gee, MCMC sure is cool.
 
 
 \section{Results}
+\label{sec:results}
 
-It's aligned?
+$10 \pm 10$ degrees, roughly.
+
+
+\begin{deluxetable*}{lccc}[!ht]
+\tablecaption{Inferred transit parameters \label{tab:results}}
+\tablehead{
+\colhead{} & \colhead{Polynomial Model} & \colhead{Stellar Activity Correlation Model} & \colhead{Starspot Fit} 
+}
+\startdata
+\vsini\ (km s$^{-1}$) & $19.6 \pm 1.5$ & $20.0 \pm 1.6$ & $19.4 \pm 1.5$ \\
+$R_p/R_\star$ & $0.059 \pm 0.002$ & $0.060 \pm 0.003$ & $0.059 \pm 0.002$ \\
+$t_0$ ($\textrm{BJD}-2457000$) & $1706.6654 \pm 0.0010$ & $1706.6653 \pm 0.0018$ &
+              $1706.6655 \pm 0.0012$\\
+$b$ & $0.18 \pm 0.11$ & $0.17 \pm 0.13$ & $0.18 \pm 0.12$ \\
+$a/$\rstar & $20.8 \pm 0.7$ & $21.2 \pm 1.1$ & $20.9 \pm 0.8$ \\
+Obliquity (deg) & $14 \pm 11$ & $5 \pm 11$ & $12 \pm 13$ \\
+Obliquity (deg), $q=1$ & $12 \pm 11$ & $13 \pm 6$ & $7 \pm 12$ \\
+Obliquity (deg), $\alpha = 1$ & $14 \pm 13$ & $3 \pm 11$ & $8 \pm 15$ \\
+\hline
+Spot Amplitude & - & - & $0.019 \pm 0.005$ \\
+Spot Size (\rstar) & - & - & $0.055 \pm 0.023$ \\
+Spot Longitude\tablenotemark{a} (deg) & - & - & $26 \pm 4$ \\
+Spot Latitude\tablenotemark{a} (deg) & - & - & $28 \pm 8$ \\
+\hline
+jitter 1 (m s$^{-1}$) & $1.8 \pm 0.9$ & $1.5 \pm 0.9$ & $1.8 \pm 0.9$ \\
+jitter 2 (m s$^{-1}$) & $8.8 \pm 4.4$ & $11.9 \pm 3.0$ & $9.3 \pm 5.4$ \\
+$q$ & $0.54 \pm 0.24$ & $0.32 \pm 0.17$ & $0.58 \pm 0.24$ \\
+$\alpha$ & $0.88 \pm 0.08$ & $0.88 \pm 0.11$ & $0.85 \pm 0.15$ \\
+\hline
+$\log \mathcal{L}_\textrm{max}$ & $-162.2$ & $-178.3$ & $-162.1$ \\
+Bayes' Factor & 0.83 & $9.1 \times 10^{-8} $ & 1.0
+\enddata
+\tablenotetext{a}{Defined at $\textrm{BJD}-2457000 = 1706.5$}
+\end{deluxetable*}
+
+
+\begin{figure}[!tbh]
+  \begin{center}
+    \includegraphics[width=0.5\textwidth, trim={0cm 0.0cm 1cm 1cm}, clip=true]{../figures/model_comp.pdf}
+   \end{center}
+  \caption{\btmtodo{figure caption needed}}
+  \label{fig:models}
+\end{figure}
 
 \section{Discussion}
+\label{sec:discussion}
+
+
+
+Mention the fast rotation of the star, vsini of like 17 km/s? And the measured rotation period here. Wouldn't hurt to include the eleanor light curve so people can see the rotation and the magnitude of the spots, and it gets us an easy citation.
+
+\subsection{Transit Timing}
+
+The ephemeris from \citet{Newton19}, which includes data from both \tess\ and \spitz, predicts a transit time for this transit of $\textrm{BJD}- 2457000 = 1706.6703 \pm 0.0006$. 
+The ephemeris from \citet{Benatti19}, which includes only \tess\ data, predicts a transit time of  $\textrm{BJD}- 2457000 = 1706.6903 \pm 0.0023$. 
+From our data, we measure a transit time of $\textrm{BJD}- 2457000 = 1706.6654 \pm  0.0012$. 
+While formally a $3\sigma$ discrepancy with each of these predictions, we note that these two predictions, using largely the same original data set, make predictions for the observed epoch which are $8\sigma$ discrepant with each other. 
+
+While it is possible the observed variations are due to the presence of an additional nearby planet, it is also possible that these analyses underestimated their photomeric uncertainty. 
+Both analyses used a Gaussian process to model the stellar rotation, but neither directly considered the effects of correlated noise on p-mode timescales on their photometry. 
+As \textit{TESS} data is collected at a two-minute cadence, the five-minute p-mode oscillations are non-negligible for a solar mass and radius star \citep{Chaplin13}, and may affect the resultant precision in individual transit times.
+
+
+Combining the \tess\ and \spitz\ data with our own transit time, we update the orbital period to $P= 8.13816 \pm 0.00003$ days. 
+We note that we do not explicitly model the p-modes either, and if they contribute significantly to the RV variability, with one data point every seven minutes on average we may be suspect to the same underestimation.
+We encourage other follow-up measurements of the transit to confirm or refute the presence of transit timing variations in this system.
+
 
 \subsection{Long-term trend}
 
-Can we call something that happens over six hours a long-term trend? Let's find out!
+Over the six hours of the transit, the apparent RV of the star increases at approximately 10 m s$^{-1}$ hr$^{-1}$. 
+In Section \ref{sec:analysis}, we model this RV shift using a toy model of a single 
+starspot group moving across the surface of the star, finding this provides an appropriate fit to the data. 
+However, we also use low-order polynomials to attempt to fit the data, finding that simple hueristic works approximately equally well.
+This could, in principle, be caused by observing a fraction of a Keplerian orbit from another object orbiting inducing an RV shift on the star. 
+We can easily rule out the wide binary companion as the culprit.
+From \citet{Liu02}, the RV acceleration from a wide binary companion with mass $m$ at a known separation $\rho$ observed at a distance $d$ is always bounded such that:
+\begin{equation}
+    \frac{d\textrm{RV}}{dt} < 197 \textrm{m } \textrm{s}^{-1} \textrm{ d}^{-1}
+    \frac{m}{M_\odot} \bigg(\frac{d}{1\textrm{pc}}\bigg)^{-2} \bigg(\frac{\rho}{1''}\bigg)^{2}.
+\end{equation}
+For this companion, the RV trend induced must be no more than 1 m s$^{-1}$ yr$^{-1}$, much less than the observed acceleration.
 
-Curve goes up in time. Is this another planet?
+\citet{Benatti19} show the RV of DS Tuc A is stable at the $\approx 200$ m s$^{-1}$ level on decadal timescales. 
+Therefore, if the trend observed during the transit were caused by a planet, it must be a planet with a period shorter than approximately 20 days. 
+If this planet is external to DS Tuc Ab, then it must have $m \sin i \geq 10$ \mjup. 
+\citet{Benatti19} rule out any such planets in their analysis of the system.
+The only plausble planetary companion which could cause this signal but evade detection is a planet in a 1-3 day orbit with a mass of 1-3 times that of Jupiter. 
 
-Feels unlikely based on the magnitude.
-Would have to be stellar and not this object and the RVs are stable at the few hundred m/s level from other surveys.
-
-Okay so what's going on?
-
-My theory:
-\begin{enumerate}
-    \item More spots on the redder side of the star 
-    \item Explains additional scatter in second half of transit, noticiable in RV data
-    \item Spots are rotating off to high longitude, being increasingly foreshortened.
-    \item The means they're blocking less of the red light from the star
-    \item makes the star overall redder in time
-    \item increases the RV of the star during the transit
-\end{enumerate}
-
-We need an OOM estimate that this can increase the RV by 40 m/s in six hours.
-Also would affect the shape of the lines but we don't have the raw spectra and I'm not suuuuuper excited about trying to dig in. Maybe one of the PFS folks would want to help with that? 
-Maybe Gully would want to help with the general spot math here?
-
-\subsection{Asas-sn data to characterize spots}
-
-\subsection{RM as a powerful technique for young stars}
-
-RVs are hard because the star is so active, but if you can get all the data in one night, it doesn't change that much---or at least in calibratable ways!
+Such a companion need only be stable for a relatively short time given the age of the system; a companion similar to this one would likely induce significant TTVs which could be detected by continued transit monitoring.
+However, starspot-induced modulation is a likely culprit which can explain the observed variability.
 
 
-But cite Barragan, Aigrain here as the power of RVs in mitigating stellar activity.
+\subsection{Starspot-induced modulation}
 
-\subsubsection{What about oblateness and differential rotation?}
+The starspot explanation explains the data well from the night of the transit.
+The toy model of Section \ref{sec:analysis} demands a starspot on the redshifted hemisphere of the star, rotating away from our line of sight during the transit. 
+While we use a single, Gaussian spot in our modeling, in reality spots are non-Gaussian and often appear in groups \citep[e.g.][]{Kilcik11}.
 
-Oblateness - how oblate is the star anyway?
-Not important for these systems, just infer a different orbital velocity or radius, depending on how its fit. The only place to learn a difference is in ingress/egress, which needs to be resolved at a high timescale. Need a precise stellar radius and eccentricity, at which point it might be useful! But this is hard for these systems because orbits are hard for these young systems.
+This may explain the excess variability observed in the second half of our transit. 
+Over this part of the transit, the observed point-to-point variability is larger, which may be the result of the planet crossing the relatively more inhomogenous hemisphere, causing an increase in the variability of the observed RV shift.
+
+Our median toy model of a single spot, carried over the entire surface of the star, causes in our model a total RV variation of 235 m s$^{-1}$; the 68\% confidence interval on the peak-to-peak RV shift from this starspot ranges from 191 to 299 m s$^{-1}$.
+Therefore, a single large spot group can explain both the variability observed during the night of the transit itself and the observed RV scatter on rotational timescales.
+This does not mean there is only a single spot group on the surface of the star, but rather informs us about the relative asymmetries in spot coverage from hemisphere to hemisphere as the star rotates.
+
+
+\subsection{Characterizing the Starspots of DS Tuc A}
+The \textit{starry} model, in addition to matching the observed RV variability, also approximately matches the photometric variability observed during the \tess\ mission. 
+This particular spot model induces variability at the $1.9\% \pm 0.4\%$ level.
+
+We can compare this 
+
+
+Fig. \btmtodo{figure} shows a light curve for DS Tuc A from the \tess\ mission, built using the \btmtodo{flux} model from the \eleanor\ software package of \citet{Feinstein19}.
+
+\begin{figure}[!tbh]
+  \begin{center}
+    \includegraphics[width=0.5\textwidth, trim={0cm 0.0cm 0cm 0cm}, clip=true]{../figures/lcs.pdf}
+   \end{center}
+  \caption{\btmtodo{figure caption needed}}
+  \label{fig:data}
+\end{figure}
+
+\btmtodo{more}
+
+
+\subsection{The Power of Obliquity Measurements of Young Stars}
+
+We have seen from these data that the RV of DS Tuc A varies by nearly 300 m s$^{-1}$ on rotational timescales. 
+However, because the surface is relatively consistent on transit timescales, the R-M signal is relatively easy to disentangle from the rotational modulation despite being an order of magnitude smaller in amplitude.
+
+Recent work has shown the potential to measure orbits of planets in the face of extreme stellar activity \citep{Barragan19}, and this still remains the only feasible way to measure masses of transiting planets spectroscopically. 
+However, even without a mass we are able to confirm this planet which had only been statistically validated in previous works. 
+From the R-M detection, we can be sure this event is the result of an object transiting the surface of DS Tuc A. 
+As the transit depth from \tess\ precludes the possibility this event is caused by a transiting brown dwarf or low-mass star, the only possible cause for this observed event is a bona fide transiting planet.
+This is the first planet to be confirmed through the measurement of its obliquity without a direct mass measurement \anytodo{Please verify this claim!}
+
+DS Tuc A has a measured \vsini of \btmtodo{number}, meaning it is not amenable to precision RV work.
+More massive stars which lack convective outer layers can rotate at similar speeds \btmtodo{cite}.
+
+Bigger signal than RVs here.
+
+
+\btmtodo{say something about getting a template on the same night as the transit.}
+
+\subsubsection{Differential Rotation}
+
+
 
 cite \citet{Giminez06} in this section probably.
 
@@ -290,6 +499,11 @@ Could we say something about differential rotation from multiple planets? This s
 
 
 Somewhere: \citet{Oshagh18} on limitations of R-M for very active stars.
+
+
+\subsection{Conclusions}
+
+
 
 \acknowledgements
 
