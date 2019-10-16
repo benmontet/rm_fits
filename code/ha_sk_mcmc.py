@@ -8,17 +8,19 @@ import emcee
 
 from multiprocessing import Pool
 
+time, vels, verr = np.loadtxt('../data/transit.vels', usecols=[0,1,2], unpack=True)
 
-time, vels, verr = np.loadtxt('../data/vst222259.ascii', usecols=[1,2,3], unpack=True)
+#time = time[:-4]
+#vels = vels[:-4]
+#verr = verr[:-4]
+
+time -= 2458706.5
+
 s, ha = np.loadtxt('../data/222259_mbcvel.ascii', usecols=[-2, -1], unpack=True)
 
-time = time[:-4]
-vels = vels[:-4]
-verr = verr[:-4]
 ha   = ha[:-7]
 s    = s[:-7]
 
-time -= 18706.5
 
 map = starry.Map(ydeg=4, udeg=2, rv=True, lazy=False)
 map.reset()
@@ -36,7 +38,7 @@ vuse = vels + 0.0
 
 bnds = ((12000, 24000), (0.04, 0.09), (-1.0, 0.0), (15,25), (0,1),(0,1), (-30,90), (-500,500), (0.0, 3.0),
         (0, 40.0), (0.0, 1.0), (0.16, 0.175), (-100000, 0), (-1000, 0.0539), (0.0, 10.0),
-        (-100000, 0), (-1000, 0.539), (0.0, 10.0))
+        (-100000, 0), (-1000, 0.539), (0.0, 10.0), (0.0, 1.0))
 
 
 
@@ -46,16 +48,16 @@ vsini_sig = 1800
 rp_mu = 0.057
 rp_sig = 0.003
 
-ndim = 18
-nwalkers = 500
+ndim = 19
+nwalkers = 600
 
-init = np.array([19300, 0.0688, -0.09, 20.79, 0.5, 0.40, 0.0, 100.0, 1.0, 5.0, 0.7, 0.166, -15000, 0.051, 1.0, -1500, 0.51, 1.0])
+init = np.array([19300, 0.0688, -0.09, 20.79, 0.5, 0.40, 0.0, 100.0, 1.0, 5.0, 0.7, 0.166, -15000, 0.051, 1.0, -1500, 0.51, 1.0, 0.8])
 
 
 
 def rmcurve(params):
 
-    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, ha_fac, ha_gam, ha_exp, s_fac, s_gam, s_exp = params
+    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, ha_fac, ha_gam, ha_exp, s_fac, s_gam, s_exp, factor = params
     veq = vsini / np.sin(inc * np.pi / 180.0)
     
     map.reset()
@@ -89,15 +91,19 @@ def rmcurve(params):
     var_bad  = (euse**2 + jitter_bad**2)
    
     goodgauss = q / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
-    badgauss = (1-q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
-    #badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv_0 * 0.75 + trend - vuse) ** 2 / (2 * var_bad))
+    #badgauss = (1-q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
+    badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv_0 * factor + trend - vuse) ** 2 / (2 * var_bad))
+     
+    #goodgauss = 1.0 / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
+    #badgauss = 0.0
+    
     lnprob = np.log(goodgauss + badgauss)
 
     #print(-1 * lnprob)
     return np.sum(lnprob)
 
 def set_priors(params):
-    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, ha_fac, ha_gam, ha_exp, s_fac, s_gam, s_exp = params
+    vsini, r, b, a, u1, u2, obl, gamma, jitter_good, jitter_bad, q, t0, ha_fac, ha_gam, ha_exp, s_fac, s_gam, s_exp, factor = params
     lnprior = 0
 
     if not all(b[0] < v < b[1] for v, b in zip(params, bnds)):
@@ -145,6 +151,7 @@ def setup_data(params):
     varystd[15] = 200.0
     varystd[16] = 0.001
     varystd[17] = 0.025
+    varystd[18] = 0.01
 
 
     for i in range(len(varystd)):
@@ -162,8 +169,11 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('../runs/chain_ha_sk_mm_rpprior', sampler.chain)
+fn = 'hamodel_factor' 
 
+np.save('../runs/chain_' + fn, sampler.chain)
+
+np.save('../runs/lnprob_' + fn, sampler.lnprobability)
 np.save('pos', pos)
 np.save('prob', prob)
 

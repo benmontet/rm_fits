@@ -9,16 +9,14 @@ import emcee
 from multiprocessing import Pool
 
 
-#time, vels, verr = np.loadtxt('../data/transit.vels', usecols=[0,1,2], unpack=True)
-#time -= 2458706.5
 
-time, vels, verr = np.loadtxt('../data/vst222259.ascii', usecols=[1,2,3], unpack=True)
+time, vels, verr = np.loadtxt('../data/transit.vels', usecols=[0,1,2], unpack=True)
 
-time = time[:-4]
-vels = vels[:-4]
-verr = verr[:-4]
+#time = time[:-4]
+#vels = vels[:-4]
+#verr = verr[:-4]
 
-time -= 18706.5
+time -= 2458706.5
 
 map = starry.Map(ydeg=4, udeg=2, rv=True, lazy=False)
 map.reset()
@@ -83,10 +81,13 @@ def rmcurve(params):
     var_good = (euse ** 2 + jitter_good ** 2)
     var_bad = (euse ** 2 + jitter_bad ** 2)
 
-    goodgauss = q / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
+    #goodgauss = q / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
     #badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv_0 * factor + trend - vuse) ** 2 / (2 * var_bad))
-    badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
-
+    ##badgauss = (1 - q) / np.sqrt(2 * np.pi * var_bad) * np.exp(-(rv - vuse) ** 2 / (2 * var_bad))
+    
+    goodgauss = 1.0 / np.sqrt(2 * np.pi * var_good) * np.exp(-(rv - vuse) ** 2 / (2 * var_good))
+    badgauss = 0.0
+    
     lnprob = np.log(goodgauss + badgauss)
 
     #print(-1 * lnprob)
@@ -155,7 +156,11 @@ with Pool(24) as pool:
 best = np.where(sampler.flatlnprobability == np.max(sampler.flatlnprobability))[0][0]
 print(sampler.flatlnprobability[best])
 
-np.save('../runs/chain_3_2_std_mm', sampler.chain)
+fn = 'toymodel_3_onegauss' 
+
+np.save('../runs/chain_' + fn, sampler.chain)
+
+np.save('../runs/lnprob_' + fn, sampler.lnprobability)
 np.save('pos', pos)
 np.save('prob', prob)
 
