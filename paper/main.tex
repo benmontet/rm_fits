@@ -1,4 +1,4 @@
-\documentclass[twocolumn]{aastex62}
+\documentclass[twocolumn]{aastex63}
 
 \bibliographystyle{aasjournal}
 \usepackage{subfigure}
@@ -138,6 +138,14 @@ Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
 
 \newcommand{\flatiron}{Center for Computational Astrophysics, Flatiron Institute, 162 Fifth Ave, New York, NY 10010, USA}
 
+\newcommand{\dtm}{Department of Terrestrial Magnetism, Carnegie Institute of Washington, Washington, DC 20015, USA}
+
+\newcommand{\carnegie}{Observatories of the Carnegie Institution for Science, 813 Santa Barbara St., Pasadena, CA 91101}
+
+\newcommand{\princeton}{Department of Astrophysical Sciences, Princeton University, 4 Ivy Lane, Princeton, NJ 08544, USA}
+
+\newcommand{\ames}{NASA Ames Research Center, Moffett Field, CA 94035, USA}
+
 
 %\submitted{for May 2, 2016}
 
@@ -162,25 +170,52 @@ Chicago, 5640 S. Ellis Ave, Chicago, IL 60637, USA}
 \author{Megan E. Bedell}
 \affiliation{\flatiron}
 
-\author{Pablo}
+\author{Johanna K. Teske}
+\altaffiliation{Hubble Fellow}
+\affiliation{\carnegie}
+\affiliation{\dtm}
 
-\author{And others TBD incl. PFS Team}
+\author{Sharon Xuesong Wang}
+\affiliation{\dtm}
+
+\author{R. Paul Butler}
+\affiliation{\dtm}
 
 \author{Erin Flowers}
+\affiliation{\princeton}
+
+\author{Michael A. Gully-Santiago}
+\affiliation{\ames}
+
+\author{Stephen A. Shectman}
+\affiliation{\carnegie}
+
+\author{Jeffrey D. Crane}
+\affiliation{\carnegie}
+
+\author{Ian B. Thompson}
+\affiliation{\carnegie}
+
+
 
 
 \correspondingauthor{Benjamin~T.~Montet; \twitter{benmontet}}
-\email{bmontet@uchicago.edu}
+\email{b.montet@unsw.edu.au}
 
 %@arxiver{f8a.pdf,f5.pdf,f2b.pdf}
 %\date{\today, \currenttime}
 
 \begin{abstract}
 
-We'll put an abstract here. comment from Luke: is this the youngest planet with an R-M? it might be? Mention that we confirm it, only previously validated.
+The abundance of short-period planetary systems with high obliquities is often taken as evidence that scattering processes play important roles in the formation and evolution of these systems.
+More recent studies have suggested that wide binary companions can tilt protoplanetary disks, inducing a high obliquity on planets that form through smooth processes like disk migration.
+\object{DS Tuc Ab}, a planet in the 45 Myr Tucana-Horologium association, likely traces its now-dissipated protoplanetary disk, enabling us to test these theories of disk physics. 
+Here, we report on Rossiter-McLaughlin observations of one transit of DS Tuc Ab with the Planet Finder Spectrograph on the Magellan Clay Telescope at Las Campanas Observatory. 
+We confirm the previously statistically validated planet by modeling the planet transit and stellar activity signals simultaneously, finding its obliquity to be low: $\psi = 12 \pm 13$ degrees. 
+This is the youngest planet to be observed using this technique; we provide a discussion on best practices to accurately measure the observed signal of similar young planets.
 \end{abstract}
 
-\keywords{This is where we'll put keywords}
+\keywords{Exoplanets (498), Exoplanet dynamics (490), High resolution spectroscopy (2096), Starspots (1572)}
 
 
  
@@ -206,7 +241,7 @@ However, \btmtodo{Batygin citation} suggest wide binary companions or nearby sta
 
 Such a survey is limited by the small number of planetary systems around young stars. There are only a handful of planets known to be younger than 100 Myr, identified by their membership in young moving groups or star forming regions \btmtodo{citep David19, Mann, others}.
 
-Recently, data from the Transiting Exoplanet Survey Satellite \citep{Ricker14} were used to identify a planet with an orbital period of 8.14 days around the star DS Tuc A \citep{Benatti19, Newton19}. 
+Recently, data from the Transiting Exoplanet Survey Satellite \citep{Ricker14} were used to identify a planet with an orbital period of 8.14 days around the star \object{DS Tuc A} \citep{Benatti19, Newton19}. 
 DS Tuc is a member of the Tucana-Horologium (Tuc-Hor) assocation, which has an age of approximately 45 Myr \btmtodo{cite!}. 
 DS Tuc itself is a binary with a projected separation of \btmtodo{AU}. 
 From \citet{Holman97}, the timescale for Kozai-Lidov interactions is
@@ -259,7 +294,7 @@ The resultant RVs are given in Table \ref{tab:data} and displayed in Figure \ref
   \begin{center}
     \includegraphics[width=0.5\textwidth, trim={0cm 0.0cm 0cm 0cm}, clip=true]{../figures/all_data.pdf}
    \end{center}
-  \caption{\btmtodo{figure caption needed}}
+  \caption{RV time series for (left) the observed transit and (right) a timespan covering approximately one stellar rotation period. Note the different vertical scalings on each subplot. The Rossiter-McLaughlin signal is easily detectable, occurring over a significantly different timescale than the rotationally-induced variability signal.}
   \label{fig:data}
 \end{figure}
 
@@ -380,7 +415,8 @@ Bayes' Factor & 0.83 & $9.1 \times 10^{-8} $ & 1.0
   \begin{center}
     \includegraphics[width=0.5\textwidth, trim={0cm 0.0cm 1cm 1cm}, clip=true]{../figures/model_comp.pdf}
    \end{center}
-  \caption{\btmtodo{figure caption needed}}
+  \caption{Draws from the posterior distributions of a simultaneous fit to the
+  Rossiter-McLaughlin signal and three different noise models. Green curves represent the noise model, while orange curves include the transit signal as well. From top to bottom, the noise models are a simple cubic polynomial fit, a fit regressed against the spectral stellar activity indicators, and a starspot model built with the \textit{starry} package of \citep{Luger19}. The polynomial and starspot models provide similar quality fits to the data, both of which find significantly higher log likelihood values than the third fit. Significantly, all give consistent results on the measured spin-orbit obliquity angle of approximately $12 \pm 12$ degrees.}
   \label{fig:models}
 \end{figure}
 
@@ -454,14 +490,14 @@ This particular spot model induces variability at the $1.9\% \pm 0.4\%$ level.
 We can compare this 
 
 
-Fig. \btmtodo{figure} shows a light curve for DS Tuc A from the \tess\ mission, built using the \btmtodo{flux} model from the \eleanor\ software package of \citet{Feinstein19}.
+Figure \ref{fig:lc_data} shows a light curve for DS Tuc A from the \tess\ mission, built using the \btmtodo{flux} model from the \eleanor\ software package of \citet{Feinstein19}.
 
 \begin{figure}[!tbh]
   \begin{center}
     \includegraphics[width=0.5\textwidth, trim={0cm 0.0cm 0cm 0cm}, clip=true]{../figures/lcs.pdf}
    \end{center}
-  \caption{\btmtodo{figure caption needed}}
-  \label{fig:data}
+  \caption{(Left) DS Tuc A light curve from the \tess\ Sector 1 Full-Frame Images, built with the \eleanor\ pipeline of \citet{Feinstein19}. (Right) ASAS-SN light curve for the same star, with the \tess\ light curve overlaid in red. While \tess\ shows a 4\% variability on rotational timescales, the star itself varies on multi-year timescales by as much as 30\%, suggesting significant starspot coverage on the stellar surface. The brightest cadences observed with \tess\ are approximately 10\% fainter than the brightest observations with ASAS-SN.}
+  \label{fig:lc_data}
 \end{figure}
 
 \btmtodo{more}
@@ -476,12 +512,12 @@ Recent work has shown the potential to measure orbits of planets in the face of 
 However, even without a mass we are able to confirm this planet which had only been statistically validated in previous works. 
 From the R-M detection, we can be sure this event is the result of an object transiting the surface of DS Tuc A. 
 As the transit depth from \tess\ precludes the possibility this event is caused by a transiting brown dwarf or low-mass star, the only possible cause for this observed event is a bona fide transiting planet.
-This is the first planet to be confirmed through the measurement of its obliquity without a direct mass measurement \anytodo{Please verify this claim!}
+DS Tuc Ab thus joins a small number of planets that have been confirmed through the secure detection of their R-M signal, and is the first member of this class discovered by the \tess\ mission \citep{Jenkins10b, Hirano12b}. 
 
 DS Tuc A has a measured \vsini of \btmtodo{number}, meaning it is not amenable to precision RV work.
 More massive stars which lack convective outer layers can rotate at similar speeds \btmtodo{cite}.
 
-Bigger signal than RVs here.
+Bigger signal than RVs here. --- future confirmation for young systems!
 
 
 \btmtodo{say something about getting a template on the same night as the transit.}
@@ -508,6 +544,8 @@ Somewhere: \citet{Oshagh18} on limitations of R-M for very active stars.
 \acknowledgements
 
 We thank \btmtodo{people including Michael Gully-Santiago and Leslie Rogers} for \btmtodo{things}.
+
+This paper includes data gathered with the 6.5 meter Magellan Telescopes located at Las Campanas Observatory, Chile.
 
 
 This research was enabled by the Exostar19 program at the Kavli Institute for Theoretical Physics at UC Santa Barbara, which was supported in part by the National Science Foundation under Grant No. NSF PHY-1748958.
@@ -558,4 +596,5 @@ NNX13AC07G and by other grants and contracts.
 
 
 \end{document}
+
 
